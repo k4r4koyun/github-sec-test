@@ -1,5 +1,10 @@
 name: "Custom Security Scanner"
 
+# This is a dependant workflow, only executed after "build"
+# workflow is successful. Otherwise, this workflow is skipped.
+
+# Useful to run operations only on successfult builds.
+
 on:
   workflow_run:
     workflows: ["build"]
