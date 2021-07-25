@@ -14,11 +14,20 @@ on:
 jobs:
   on-success:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
     runs-on: ubuntu-latest
-    container:
-      image: docker.pkg.github.com/k4r4koyun/github-sec-test/application:latest
+
+    env:
+      IMAGE_ID: docker.pkg.github.com/${{ github.repository }}/application:latest
     
     steps:
-      - name: Test Command
-        run: ls
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Get latest container image
+        run: docker pull $IMAGE_ID
+
+      - name: List docker images
+        run: docker images -a
+
+      - name: List docker containers
+        run: docker ps -a
