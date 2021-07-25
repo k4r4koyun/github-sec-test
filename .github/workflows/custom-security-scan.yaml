@@ -27,7 +27,7 @@ jobs:
         run: docker pull $IMAGE_ID
 
       - name: Run the image
-        run: docker run -d $IMAGE_ID
+        run: "docker run -d -p 5000:5000 $IMAGE_ID"
 
       - name: List docker images
         run: docker images -a
