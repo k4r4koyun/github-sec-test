@@ -14,10 +14,10 @@ on:
 jobs:
   on-success:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    
+
     runs-on: ubuntu-latest
     container:
-      image: github-sec-test/application:latest
+      image: docker.pkg.github.com/k4r4koyun/github-sec-test/application:latest
     
     steps:
       - name: Test Command
