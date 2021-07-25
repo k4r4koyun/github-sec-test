@@ -1,4 +1,4 @@
-name: security-workflow
+name: "Custom Security Scanner"
 
 on:
   workflow_run:
