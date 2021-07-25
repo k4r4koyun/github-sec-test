@@ -12,7 +12,6 @@ idna==2.8
 jinja2==2.10
 markupsafe==1.1.0
 multidict==4.5.2
-psycopg2==2.7.6.1
 pyyaml==3.13
 trafaret-config==2.0.2
 trafaret==1.2.0
