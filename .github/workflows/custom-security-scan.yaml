@@ -15,6 +15,7 @@ jobs:
   on-success:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     env:
       IMAGE_ID: docker.pkg.github.com/${{ github.repository }}/application:latest
@@ -30,7 +31,7 @@ jobs:
         run: "docker run -d $IMAGE_ID"
 
       - name: Wait for container to start
-        run: "until curl -s http://127.0.0.1:5000/ | grep 'Hello, World' > /dev/null 2>&1; do sleep 0.1; done;"
+        run: "until curl -s http://172.17.0.2:5000/ | grep 'Hello, World' > /dev/null 2>&1; do sleep 0.1; done;"
 
       - name: List docker images
         run: docker images -a
@@ -39,4 +40,4 @@ jobs:
         run: docker ps -a
 
       - name: Check console endpoint
-        run: "curl -i http://127.0.0.1:5000/console | grep -vz 'Werkzeug Debugger'"
+        run: "curl -i http://172.17.0.2:5000/console | grep -vz 'Werkzeug Debugger'"
