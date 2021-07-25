@@ -3,7 +3,9 @@ name: "Custom Security Scanner"
 # This is a dependant workflow, only executed after "build"
 # workflow is successful. Otherwise, this workflow is skipped.
 
-# Useful to run operations only on successfult builds.
+# Useful to run operations only on successfult builds. Necessary
+# for DAST-like use cases if the pipeline goes like:
+# [build -> DAST checks -> publish]
 
 on:
   workflow_run:
@@ -30,7 +32,7 @@ jobs:
       - name: Run the image
         run: "docker run -d $IMAGE_ID"
 
-      - name: Wait for container to start
+      - name: Wait for container to fully start
         run: "until curl -s http://172.17.0.2:5000/ | grep 'Hello, World' > /dev/null 2>&1; do sleep 0.1; done;"
 
       - name: List docker images
@@ -39,5 +41,6 @@ jobs:
       - name: List docker containers
         run: docker ps -a
 
+        # Will exit with code 1 if console is enabled
       - name: Check console endpoint
         run: "curl -i http://172.17.0.2:5000/console | grep -vz 'Werkzeug Debugger'"
