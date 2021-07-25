@@ -13,8 +13,12 @@ on:
 
 jobs:
   on-success:
-    runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    runs-on: ubuntu-latest
+    container:
+      image: github-sec-test/application:latest
+    
     steps:
       - name: Test Command
         run: ls
