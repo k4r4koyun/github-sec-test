@@ -36,4 +36,4 @@ jobs:
         run: docker ps -a
 
       - name: Check console endpoint
-        run: "curl -i http://0.0.0.0:5000/console"
+        run: "curl -i http://0.0.0.0:5000/console | grep -vz 'Werkzeug Debugger'"
