@@ -26,8 +26,14 @@ jobs:
       - name: Get latest container image
         run: docker pull $IMAGE_ID
 
+      - name: Run the image
+        run: docker run -d $IMAGE_ID
+
       - name: List docker images
         run: docker images -a
 
       - name: List docker containers
         run: docker ps -a
+
+      - name: Check console endpoint
+        run: "curl -i http://localhost:5000/console"
